@@ -1,54 +1,32 @@
 <?php
 
 /**
- * Database model for Resumes
+ * Database model for Appointments
  */
 
-class Resumes Extends DB {
+class Appointments Extends DB {
 
     public function __construct(){
         parent::__construct();
     }
     
     public function insert($data) {  
-        //insert a new user then insert a resume using the new user id
-        $user = $data['user'];
-        $user_type_id = $user->getUser_type_id();
+        //insert new appointment
+        $appointment = $data['appointment'];
 
-        $insertUserSql = "INSERT INTO users (
-            user_type_id, 
-            name, 
-            email, 
-            phone) 
-          VALUES (
-            '". $user->getUser_type_id() ."',
-            '". $user->getName() ."',
-            '". $user->getEmail() ."',
-            '". $user->getPhone() ."'
-        )";
-        
-        $this->exec($insertUserSql);
-        
-        $newUserId = mysqli_insert_id($this->mysqli);
-        
-        $resume = $data['resume'];
-        
-        //set the new resume user id to the new user id just created
-        $resume->setUser_id($newUserId);
-
-        $insertResumeSql = "INSERT INTO resumes (
-            job_id,
+        $sql = "INSERT INTO appointments (
             user_id,
             name,
             file)
-          VALUES (
-            '". $resume->getJob_id() ."',
-            '". $resume->getUser_id() ."',
-            '". $resume->getName() ."',
-            '". $resume->getFile() ."'
-        )";
+          VALUES (?, ?, ?)";
  
-        $this->exec($insertResumeSql);
+        $userIdSeeker = $appointment->getUser_id_seeker();
+        $userIdManager = $appointment->getUser_id_manager();
+        $appointmentDate = $appointment->getDate();
+
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("iis", $userIdSeeker, $userIdManager, $appointmentDate);
+        $stmt->execute();
         
         return mysqli_insert_id($this->mysqli);
     }

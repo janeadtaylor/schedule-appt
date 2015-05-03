@@ -11,14 +11,39 @@ class Users Extends DB {
     }
     
     public function getById($id) {
-        $sql = "SELECT * from users WHERE id = $id";
+        $sql = "SELECT * from users WHERE id = ?";
        
         $user = new User();
         
-        $results = $this->exec($sql);     
-        while($row = $results->fetch_assoc()) {
-            $user = new Job();
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $results = $stmt->get_result();
+
+        while($row = $results->fetch_array(MYSQLI_ASSOC)) {
             $user->setId($row["id"]);
+            $user->setUser_type_id($row["user_type_id"]);
+            $user->setName($row["name"]);
+            $user->setEmail($row["email"]);
+        }
+        
+        return $user;
+    }
+    
+    public function getByEmailAndPassword($email, $password) {
+        $sql = "SELECT * from users WHERE email = ? AND password = ?";
+       
+        $user = new User();
+        
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("ss", $email, $password);
+        $stmt->execute();
+        $results = $stmt->get_result();
+
+        while($row = $results->fetch_array(MYSQLI_ASSOC)) {
+            $user->setId($row["id"]);
+            $user->setUser_type_id($row["user_type_id"]);
+            $user->setName($row["name"]);
             $user->setEmail($row["email"]);
         }
         

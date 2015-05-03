@@ -1,21 +1,19 @@
 <?php
 
 /**
- * Data object for Resume
+ * Data object for Appointment
  */
 
-class Resume {
+class Appointment {
     private $id;
-    private $job_id;
-    private $user_id;
-    private $name;
-    private $file;
+    private $user_id_seeker;
+    private $user_id_manager;
+    private $date;
 
     public function __construct(){
     
     }
-    
-    /**
+	/**
      * @return the $id
      */
     public function getId()
@@ -24,39 +22,31 @@ class Resume {
     }
 
 	/**
-     * @return the $job_id
+     * @return the $user_id_seeker
      */
-    public function getJob_id()
+    public function getUser_id_seeker()
     {
-        return $this->job_id;
+        return $this->user_id_seeker;
     }
 
 	/**
-     * @return the $user_id
+     * @return the $user_id_manager
      */
-    public function getUser_id()
+    public function getUser_id_manager()
     {
-        return $this->user_id;
+        return $this->user_id_manager;
     }
 
 	/**
-     * @return the $name
+     * @return the $date
      */
-    public function getName()
+    public function getDate()
     {
-        return $this->name;
+        return $this->date;
     }
 
 	/**
-     * @return the $file
-     */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-	/**
-     * @param int $id
+     * @param field_type $id
      */
     public function setId($id)
     {
@@ -64,35 +54,30 @@ class Resume {
     }
 
 	/**
-     * @param int $job_id
+     * @param field_type $user_id_seeker
      */
-    public function setJob_id($job_id)
+    public function setUser_id_seeker($user_id_seeker)
     {
-        $this->job_id = $job_id;
+        $this->user_id_seeker = $user_id_seeker;
     }
 
 	/**
-     * @param int $user_id
+     * @param field_type $user_id_manager
      */
-    public function setUser_id($user_id)
+    public function setUser_id_manager($user_id_manager)
     {
-        $this->user_id = $user_id;
+        $this->user_id_manager = $user_id_manager;
     }
 
 	/**
-     * @param string $name
+     * @param field_type $date
      */
-    public function setName($name)
+    public function setDate($date)
     {
-        $this->name = $name;
+        $this->date = $date;
     }
 
-	/**
-     * @param string $file
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
-    }
+    
+    
 
 }

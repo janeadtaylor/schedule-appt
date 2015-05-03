@@ -1,51 +1,51 @@
 <?php
 //loading necessary files (would usually handle this with bootstrap autoloading and utilizing front controller pattern)
 require_once 'core/db.php';
-require_once 'modules/jobs/model/jobs.php';
-require_once 'modules/jobs/data/job.php';
-?>
+require_once 'modules/appointments/model/appointments.php';
+require_once 'modules/appointments/data/appointment.php';
+require_once 'modules/users/model/users.php';
+require_once 'modules/users/data/user.php';
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Submit Resume</title>
-        <link href="public/css/styles.css" media="all" rel="stylesheet" />
-    </head>
-    <body>
-       <form action="modules/appointments/appointments.php" method="post" enctype="multipart/form-data">
-            <h3>Submit Resume</h3>
-            <div>Please select which job you are applying for:</div>
-            <select name="jobId" id="jobId">
-              <?php
-                  $jobsDB = new Jobs();
-                  $allJobs = $jobsDB->getAll();
-              
-                  foreach($allJobs as $job) { ?>
-                    <option value="<?php echo $job->getId() ?>"><?php echo $job->getUserName() . ' - ' . $job->getJobName(); ?></option>
-              <?php } ?>
-            </select> 
-            <br /><br />
-            <div>Name: <input type="text" name="name" size="35"></div>
-            <div>Email: <input type="text" name="email" size="35"></div>
-            <div>Phone: <input type="text" name="phone"  maxlength="12" size="12" value="___-___-____" onfocus="clearInputText(this);"></div>
-            <br />
-			<div>Resume Title: <input type="text" name="title" size="23"></div>
-			<div>Select File: <input type="file" name="myfile"></div>
-			<br />
-			<div><input type="submit" value=""></div>
+//start session
+session_start();
 
-			<br />
-            <div class="progress">
-	            <div class="bar"></div >
-	            <div class="percent">0%</div >      
-	            <div id="status"></div>         
-       		</div>
-       		<br />  
-        </form>
-        <script src="public/js/jquery.js"></script>
-        <script src="public/js/jquery.form.js"></script>
-        <script src="public/js/uploadProgress.js"></script>
-        <script src="public/js/functions.js"></script>
-    </body>
-</html>
+// if posted check for login details in database
+if(isset($_POST['email'])) {
+    if(isset($_POST['password'])) {
+        //check login and set user data
+        $UsersDB = new Users();
+        $user = $UsersDB->getByEmailAndPassword($_POST['email'], $_POST['password']);
+        $_SESSION['user'] = serialize($user);
+    } else {
+        $user = unserialize($_SESSION['user']);
+    } 
+    
+    //if login valid then set session user id to logged in user id   
+    if(!empty($user->getId())) {
+        $_SESSION['user_id'] = $user->getId();
+    }
+} else {
+    //logout on load index (for testing)
+    unset($_SESSION['user']);
+    unset($_SESSION['user_id']);
+}
 
+//load header content
+require_once 'core/header.php';
+
+//check if logged in
+if(!isset($_SESSION['user_id'])) { 
+    //display login view if not logged in
+    require_once 'modules/users/view/login.php';
+} else {     
+    if(isset($_POST['add'])) { 
+        //display add appointment view
+        require_once 'modules/appointments/view/appointments.php';
+    } else { 
+        //display user home page view
+        require_once 'modules/users/view/home.php';
+    }
+}
+
+//load footer content
+require_once 'core/footer.php';

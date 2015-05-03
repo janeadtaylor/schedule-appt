@@ -6,13 +6,14 @@
 
 class User {
     
-    static $USER_TYPE_APPLICANT = 2;
+    static $USER_TYPE_MANAGER = 1;
+    static $USER_TYPE_SEEKER = 2;
     
     private $id;
     private $user_type_id;
     private $name;
     private $email;
-    private $phone;
+    private $password;
     
     public function __construct(){
     
@@ -51,15 +52,15 @@ class User {
     }
 
 	/**
-     * @return the $phone
+     * @return the $password
      */
-    public function getPhone()
+    public function getPassword()
     {
-        return $this->phone;
+        return $this->password;
     }
 
 	/**
-     * @param int $id
+     * @param field_type $id
      */
     public function setId($id)
     {
@@ -67,7 +68,7 @@ class User {
     }
 
 	/**
-     * @param int $user_type_id
+     * @param field_type $user_type_id
      */
     public function setUser_type_id($user_type_id)
     {
@@ -75,7 +76,7 @@ class User {
     }
 
 	/**
-     * @param string $name
+     * @param field_type $name
      */
     public function setName($name)
     {
@@ -83,7 +84,7 @@ class User {
     }
 
 	/**
-     * @param string $email
+     * @param field_type $email
      */
     public function setEmail($email)
     {
@@ -91,12 +92,13 @@ class User {
     }
 
 	/**
-     * @param string $phone
+     * @param field_type $password
      */
-    public function setPhone($phone)
+    public function setPassword($password)
     {
-        $this->phone = $phone;
+        $this->password = $password;
     }
 
+    
 
 }

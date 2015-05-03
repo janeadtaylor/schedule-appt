@@ -12,6 +12,7 @@ form {
 	border : 1px solid #ddd;
 	padding: 15px;
 	width: 300px;
+	text-align: center;
 }
 
 .progress {
@@ -41,11 +42,12 @@ form {
 	margin-top: 30px;
 }
 
-input[type=submit] {
+input[type=submit].submit {
     background: url(../images/submit.png);
     border: 0;
     display: block;
     height: 46px;
     width: 196px;
 	cursor: pointer; 
+	margin-left: 65px;
 }
