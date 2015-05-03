@@ -1,6 +1,6 @@
 # schedule-appt
 
-This is a simple schedule appointment application. The form uses AJAX to submit the form. 
+This is a simple schedule appointment application. The form uses AJAX to submit the new appointment data. 
 
 There is a db.sql file that contains a SQL script to create the required database.  The config values in the core/db.php file will need to be updated for the given environment.
 
