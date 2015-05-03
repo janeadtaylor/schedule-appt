@@ -50,4 +50,28 @@ class Users Extends DB {
         return $user;
     }
     
+    public function getAllManagers() {
+        $sql = "SELECT * from users WHERE user_type_id = 1";
+         
+        $users = array();
+    
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $results = $stmt->get_result();
+    
+        while($row = $results->fetch_array(MYSQLI_ASSOC)) {
+            $user = new User();
+            $user->setId($row["id"]);
+            $user->setUser_type_id($row["user_type_id"]);
+            $user->setName($row["name"]);
+            $user->setEmail($row["email"]);
+            
+            $users[] = $user;
+        }
+    
+        return $users;
+    }
+    
+    
 }

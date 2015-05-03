@@ -51,3 +51,7 @@ input[type=submit].submit {
 	cursor: pointer; 
 	margin-left: 65px;
 }
+
+input[type=submit].left {
+	margin-left: 50px;
+}

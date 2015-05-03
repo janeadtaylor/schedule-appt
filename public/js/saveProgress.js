@@ -4,7 +4,7 @@
         var percent = $('.percent');
         var status = $('#status');
 
-        $('form').ajaxForm({
+        $('#save').ajaxForm({
             beforeSend: function() {
                 status.empty();
                 var percentVal = '0%';

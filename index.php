@@ -16,9 +16,9 @@ if(isset($_POST['email'])) {
         $UsersDB = new Users();
         $user = $UsersDB->getByEmailAndPassword($_POST['email'], $_POST['password']);
         $_SESSION['user'] = serialize($user);
-    } else {
-        $user = unserialize($_SESSION['user']);
     } 
+    
+    $user = unserialize($_SESSION['user']);
     
     //if login valid then set session user id to logged in user id   
     if(!empty($user->getId())) {
@@ -34,11 +34,11 @@ if(isset($_POST['email'])) {
 require_once 'core/header.php';
 
 //check if logged in
-if(!isset($_SESSION['user_id'])) { 
+if(!isset($_SESSION['user_id']) && !isset($_GET['user_id'])) { 
     //display login view if not logged in
     require_once 'modules/users/view/login.php';
 } else {     
-    if(isset($_POST['add'])) { 
+    if(isset($_POST['add'])) {
         //display add appointment view
         require_once 'modules/appointments/view/appointments.php';
     } else { 
